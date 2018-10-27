@@ -11,6 +11,7 @@ MOVEMENT = 25
 
 print("Starting alarm")
 time.sleep(15)
+print("Alarm started")
 
 GPIO.setup(TRIG,GPIO.OUT)                  #Set pin as GPIO out
 GPIO.setup(ECHO,GPIO.IN)                   #Set pin as GPIO in
@@ -45,7 +46,12 @@ while True:
 
   # print(distance)
 
-  if distance < 10.0 or state == 1:
-	  print("inbreker" + (time.strftime("%H:%M:%S")))
-	  GPIO.cleanup()
-	  break;
+  if distance < 10.0:
+    print("inbreker afstand" + (time.strftime("%H:%M:%S")))
+    GPIO.cleanup()
+    break;
+
+  if state == 1:
+      print("Inbreker radar" + (time.strftime("%H:%M:%S")))
+      GPIO.cleanup()
+      break;
