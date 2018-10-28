@@ -5,9 +5,9 @@ import socket							   #Import socket library
 
 GPIO.setmode(GPIO.BCM)                     #Set GPIO pin numbering
 
-TRIG = 23                                  #Associate pin 23 to TRIG
-ECHO = 24                                  #Associate pin 24 to ECHO
-MOVEMENT = 25
+TRIG = 23                                  #pin 23 as trig
+ECHO = 24                                  #pin 24 as echo
+MOVEMENT = 25                              #pin 25 to output radar sensor
 
 print("Starting alarm")
 time.sleep(15)
@@ -17,7 +17,7 @@ GPIO.setup(TRIG,GPIO.OUT)                  #Set pin as GPIO out
 GPIO.setup(ECHO,GPIO.IN)                   #Set pin as GPIO in
 GPIO.setup(MOVEMENT, GPIO.IN)
 
-# with socket.socket() as s:			   #
+# with socket.socket() as s:			   #connect to server pi to send the detection message
 #     s.connect(("serverip", 8080))
 
 while True:
@@ -41,17 +41,17 @@ while True:
   distance = round(distance, 2)            #Round to two decimal points
 
   state = GPIO.input(MOVEMENT)
+                                                                #Test if statements to see if the sensors are working correctly
+  # if distance < 10.0:
+  #   print("inbreker afstand" + (time.strftime("%H:%M:%S")))
+  #
+  #   GPIO.cleanup()
+  #   break;
+  #
   # if state == 1:
-	#   print("alarm 1")
+  #     print("Inbreker radar" + (time.strftime("%H:%M:%S")))
+  #     GPIO.cleanup()
+  #     break;
 
-  # print(distance)
-
-  if distance < 10.0:
-    print("inbreker afstand" + (time.strftime("%H:%M:%S")))
-    GPIO.cleanup()
-    break;
-
-  if state == 1:
-      print("Inbreker radar" + (time.strftime("%H:%M:%S")))
-      GPIO.cleanup()
-      break;
+  if distance < 10.0 or state ==1:
+    # s.send(b"True")                     #Send True as message to server pi when intruder is detected
