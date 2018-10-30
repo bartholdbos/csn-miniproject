@@ -54,5 +54,6 @@ with socket.socket() as s:  # connect to server pi to send the detection message
                 if time.time() - nu >= 10:
                     print("inbreker radar " + (time.strftime("%H:%M:%S")))
                     s.send(b"radar")
+                    nu = 0
         else:
             nu = 0
